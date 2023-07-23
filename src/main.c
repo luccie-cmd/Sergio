@@ -1,10 +1,19 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include "types.h"
 #include "util.h"
 #include "cpu.h"
 #include "insts.h"
+
+char *shift(int *argc, char ***argv){
+    if(*argc == 0) return NULL;
+    char *result = **argv;
+    *argv+=1;
+    *argc-=1;
+    return result;
+}
 
 void execute(CPU *cpu, File program){
     size_t programi = 0;
@@ -91,10 +100,37 @@ void execute(CPU *cpu, File program){
     }
 }
 
-int main(){
-    WriteFile();
+void usage(){
+    printf("Sergio -o <*.bin>\n");
+    printf("extra options\n");
+    printf("    -h  prints this help\n");
+}
+
+int main(int argc, char **argv){
+    (void)shift(&argc, &argv);
+    char *out_file = NULL;
+    while(argc > 0){
+        char *arg = shift(&argc, &argv);
+        if(strcmp(arg, "-o") == 0){
+            out_file = shift(&argc, &argv);
+            if(out_file == NULL){
+                usage();
+                printf("Must provide file after `-o`\n");
+                exit(1);
+            }
+        }
+        else if(strcmp(arg, "-h") == 0){
+            usage();
+            return 0;
+        }
+        else{
+            printf("No argument named: `%s`\n", arg);
+            exit(1);
+        }
+    }
+    WriteFile(out_file);
     CPU cpu = {0};
-    File program = ReadFile();
+    File program = ReadFile(out_file);
     print_program(&program);
     execute(&cpu, program);
     free(program.data);

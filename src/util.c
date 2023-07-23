@@ -1,7 +1,7 @@
 #include "util.h"
 
-int WriteFile(){
-    FILE *f = fopen("./test.bin", "wb");
+int WriteFile(char *file){
+    FILE *f = fopen(file, "wb");
     if(!f){
         printf("Could not make file `main.bin`\n");
         return 1;
@@ -17,8 +17,8 @@ int WriteFile(){
     return 0;
 }
 
-File ReadFile(){
-    FILE *f = fopen("./test.bin", "rb");
+File ReadFile(char *file){
+    FILE *f = fopen(file, "rb");
     if(!f){
         printf("Could not open file `main.bin`\n");
         exit(1);
