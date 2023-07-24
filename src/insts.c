@@ -17,10 +17,18 @@ const char *inst_as_cstr(Inst_Type type)
         case INST_TYPE_ADD: return "ADD";
         case INST_TYPE_SUB: return "SUB";
         case INST_TYPE_MULT:return "MULT";
+        case INST_TYPE_DIV: return "DIV";
         case INST_TYPE_INT: return "INT";
         case INST_TYPE_CALL: return "CALL";
         case INST_TYPE_RET: return "RET";
         default: return NULL;
     }
     return NULL;
+}
+
+void interrupt(Interrupts interrupt){
+    if(interrupt == INT_DIV_BY_ZERO){
+        printf("Segmentation fault\nCore dumped\n");
+        exit(1);
+    }
 }

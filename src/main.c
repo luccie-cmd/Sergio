@@ -96,6 +96,18 @@ void execute(CPU *cpu, File program){
                 cpu->registerA = result;
                 programi+=2;
             } break;
+            case INST_TYPE_DIV: {
+                BYTE value = program.data[programi+1];
+                if(value == 0){
+                    cpu->flags.Z = 1;
+                    programi+=2;
+                    interrupt(INT_DIV_BY_ZERO);
+                    continue;
+                }
+                uint8_t result = cpu->registerA / value;
+                cpu->registerA = result;
+                programi+=2;
+            } break;
             case INST_TYPE_SUB: {
                 BYTE value = program.data[programi+1];
                 cpu->registerA -= value;
@@ -188,5 +200,6 @@ int main(int argc, char **argv){
     File program = ReadFile(out_file);
     execute(&cpu, program);
     free(program.data);
+    print_cpu(&cpu);
     return 0;
 }

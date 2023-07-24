@@ -2,6 +2,7 @@
 #define _CPU_H
 #include <stdio.h>
 #include "types.h"
+#include "insts.h"
 
 typedef struct{
     int bus[8];
@@ -9,6 +10,7 @@ typedef struct{
 
 typedef struct{
     int C;
+    int Z;
 } Flags;
 
 typedef struct{
