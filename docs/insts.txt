@@ -1,0 +1,17 @@
+1: lda
+2: ldb
+3: sta
+4: stb
+5: obu
+6: movb
+7: mova
+8: jmp
+9: lfm
+10: nop
+11: ibu
+12: add
+13: sub
+14: mul
+15: int
+16: call
+17: ret
