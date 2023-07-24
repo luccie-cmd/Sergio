@@ -9,5 +9,5 @@
 ```console
     $ cd bin
     $ make -B
-    $ ./main
+    $ ./Segio -o test.bin
 ```
