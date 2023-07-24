@@ -89,7 +89,25 @@ void execute(CPU *cpu, File program){
             } break;
             case INST_TYPE_ADD: {
                 BYTE value = program.data[programi+1];
-                cpu->registerA += value;
+                uint8_t result = cpu->registerA + value;
+                if(result < cpu->registerA){
+                    cpu->flags.C = 1;
+                }
+                cpu->registerA = result;
+                programi+=2;
+            } break;
+            case INST_TYPE_SUB: {
+                BYTE value = program.data[programi+1];
+                cpu->registerA -= value;
+                programi+=2;
+            } break;
+            case INST_TYPE_MULT: {
+                BYTE value = program.data[programi+1];
+                uint8_t result = cpu->registerA * value;
+                if(result < cpu->registerA){
+                    cpu->flags.C = 1;
+                }
+                cpu->registerA = result;
                 programi+=2;
             } break;
             case INST_TYPE_INT: {

@@ -8,6 +8,10 @@ typedef struct{
 } Bus;
 
 typedef struct{
+    int C;
+} Flags;
+
+typedef struct{
     BYTE registerA;
     BYTE registerB;
     BYTE memory[INT16_MAX];
@@ -15,6 +19,7 @@ typedef struct{
     uint16_t addresses_len;
     WORD stack[255];
     BYTE SP;
+    Flags flags;
 } CPU;
 
 void print_cpu(const CPU *cpu);

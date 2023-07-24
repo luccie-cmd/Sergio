@@ -15,6 +15,8 @@ const char *inst_as_cstr(Inst_Type type)
         case INST_TYPE_LFM: return "LFM";
         case INST_TYPE_NOP: return "NOP";
         case INST_TYPE_ADD: return "ADD";
+        case INST_TYPE_SUB: return "SUB";
+        case INST_TYPE_MULT:return "MULT";
         case INST_TYPE_INT: return "INT";
         case INST_TYPE_CALL: return "CALL";
         case INST_TYPE_RET: return "RET";

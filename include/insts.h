@@ -15,9 +15,11 @@ typedef enum{
     INST_TYPE_NOP=0xea,  // does nothing
     INST_TYPE_IBU=0x1b,  // sets the memory at the provided index to the bus content
     INST_TYPE_ADD=0xad,  // add the value of the number after it to the a register
+    INST_TYPE_SUB=0x5d,  // subs the value of the number after it to the a register
+    INST_TYPE_MULT=0x87, // multiplies the value of the number after it to the a register
     INST_TYPE_INT=0x17,  // cpu interrupts
     INST_TYPE_CALL=0x20, // sets the intstruction pointer to the address after it and pushes the return address to the stack
-    INST_TYPE_RET=0x21   // gets the first address in the stack that it finds and returns to it
+    INST_TYPE_RET=0x21,  // gets the first address in the stack that it finds and returns to it
 } Inst_Type;
 
 typedef enum{
