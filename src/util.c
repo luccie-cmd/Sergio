@@ -3,14 +3,22 @@
 int WriteFile(char *file){
     FILE *f = fopen(file, "wb");
     if(!f){
-        printf("Could not make file `main.bin`\n");
+        printf("Could not make file `%s`\n", file);
         return 1;
     }
     uint8_t program[] = {
         0x00, 'S', 'G', 0x00,
-        0xa1, 0x55,       // lda #$55
-        0xad, 0x55,       // add #$55
-        0xb1, 0xaa,       // ldb #$aa
+        0xa1, 0x01,       // lda #$01 (01 is teletype function call)
+
+        0xb1, 72,
+        0x17, 0x01,
+        0xb1, 101,
+        0x17, 0x01,
+        0xb1, 108,
+        0x17, 0x01,
+        0x17, 0x01,
+        0xb1, 111,
+        0x17, 0x01,
     };
     fwrite(&program, 1, ARRAY_SIZE(program)*sizeof(uint8_t), f);
     fclose(f);
@@ -20,7 +28,7 @@ int WriteFile(char *file){
 File ReadFile(char *file){
     FILE *f = fopen(file, "rb");
     if(!f){
-        printf("Could not open file `main.bin`\n");
+        printf("Could not open file `%s`\n", file);
         exit(1);
     }
 

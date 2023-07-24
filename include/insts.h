@@ -15,7 +15,12 @@ typedef enum{
     INST_TYPE_NOP=0xea,  // does nothing
     INST_TYPE_IBU=0x1b,  // sets the memory at the provided index to the bus content
     INST_TYPE_ADD=0xad,  // add the value of the number after it to the a register
+    INST_TYPE_INT=0x17,  // cpu interrupts
 } Inst_Type;
+
+typedef enum{
+    INT_VIDEO=0x01,
+} Interrupts;
 
 const char* inst_as_cstr(Inst_Type type);
 

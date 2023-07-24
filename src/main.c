@@ -28,25 +28,25 @@ void execute(CPU *cpu, File program){
                 programi++;
             } break;
             case INST_TYPE_LDA: {
-                uint8_t value = program.data[programi+1];
+                BYTE value = program.data[programi+1];
                 cpu->registerA = value;
                 programi+=2;
             } break;
             case INST_TYPE_STA: {
-                uint8_t msb = program.data[programi+1];
-                uint8_t lsb = program.data[programi+2];
+                BYTE msb = program.data[programi+1];
+                BYTE lsb = program.data[programi+2];
                 uint16_t combinedValue = ((uint16_t)msb << 8) | lsb;
                 cpu->memory[combinedValue] = cpu->registerA;
                 programi+=3;
             } break;
             case INST_TYPE_LDB: {
-                uint8_t value = program.data[programi+1];
+                BYTE value = program.data[programi+1];
                 cpu->registerB = value;
                 programi+=2;
             } break;
             case INST_TYPE_STB: {
-                uint8_t msb = program.data[programi+1];
-                uint8_t lsb = program.data[programi+2];
+                BYTE msb = program.data[programi+1];
+                BYTE lsb = program.data[programi+2];
                 uint16_t combinedValue = ((uint16_t)msb << 8) | lsb;
                 cpu->memory[combinedValue] = cpu->registerB;
                 programi+=3;
@@ -58,10 +58,10 @@ void execute(CPU *cpu, File program){
                 programi++;
             } break;
             case INST_TYPE_IBU: {
-                uint8_t msb = program.data[programi+1];
-                uint8_t lsb = program.data[programi+2];
+                BYTE msb = program.data[programi+1];
+                BYTE lsb = program.data[programi+2];
                 uint16_t combinedValue = ((uint16_t)msb << 8) | lsb;
-                uint8_t packed_value = 0;
+                BYTE packed_value = 0;
                 for (int i = 0; i < 8; ++i) {
                     packed_value |= (cpu->bus.bus[(8 - i - 1)] & 0x01) << i;
                 }
@@ -77,19 +77,42 @@ void execute(CPU *cpu, File program){
                 programi++;
             } break;
             case INST_TYPE_JMP: {
-                uint8_t addr = program.data[programi+1];
+                BYTE addr = program.data[programi+1];
                 programi = addr;
             } break;
             case INST_TYPE_LFM: {
-                uint8_t msb = program.data[programi+1];
-                uint8_t lsb = program.data[programi+2];
+                BYTE msb = program.data[programi+1];
+                BYTE lsb = program.data[programi+2];
                 uint16_t combinedValue = ((uint16_t)msb << 8) | lsb;
                 cpu->registerA = cpu->memory[combinedValue];
                 programi+=3;
             } break;
             case INST_TYPE_ADD: {
-                uint8_t value = program.data[programi+1];
+                BYTE value = program.data[programi+1];
                 cpu->registerA += value;
+                programi+=2;
+            } break;
+            case INST_TYPE_INT: {
+                BYTE interrupt = program.data[programi+1];
+                switch(interrupt){
+                    case INT_VIDEO: {
+                        switch(cpu->registerA){
+                            // print a single character
+                            case 0x01: {
+                                BYTE ascii = cpu->registerB;
+                                putc(ascii, stdout);
+                            } break;
+                            default: {
+                                printf("Invalid interrupt type\n");
+                                exit(1);
+                            }
+                        }
+                    } break;
+                    default: {
+                        printf("No interrupt with value `%d`\n", interrupt);
+                        exit(1);
+                    }
+                }
                 programi+=2;
             } break;
             default: {
@@ -131,9 +154,7 @@ int main(int argc, char **argv){
     WriteFile(out_file);
     CPU cpu = {0};
     File program = ReadFile(out_file);
-    print_program(&program);
     execute(&cpu, program);
     free(program.data);
-    print_cpu(&cpu);
     return 0;
 }
