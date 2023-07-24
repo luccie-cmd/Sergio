@@ -8,17 +8,13 @@ typedef struct{
 } Bus;
 
 typedef struct{
-    uint8_t addr;
-    uint8_t ret_addr;
-} Call_Address;
-
-typedef struct{
     BYTE registerA;
     BYTE registerB;
     BYTE memory[INT16_MAX];
     Bus bus;
-    Call_Address addresses[1024];
     uint16_t addresses_len;
+    WORD stack[255];
+    BYTE SP;
 } CPU;
 
 void print_cpu(const CPU *cpu);

@@ -8,17 +8,17 @@ int WriteFile(char *file){
     }
     uint8_t program[] = {
         0x00, 'S', 'G', 0x00,
-        0xa1, 0x01,       // lda #$01 (01 is teletype function call)
+        0x20, 0x00, 0x0F,  // call #$000F
+        0xa1, 0x01,        // lda #$01
+        0xb1, 101,         // ldb #72
+        0x17, 0x01,        // int #$01
+        0x17, 0x02,        // int #$02
 
-        0xb1, 72,
-        0x17, 0x01,
-        0xb1, 101,
-        0x17, 0x01,
-        0xb1, 108,
-        0x17, 0x01,
-        0x17, 0x01,
-        0xb1, 111,
-        0x17, 0x01,
+        // 0x000F
+        0xa1, 0x01,        // lda #$01
+        0xb1, 72,          // ldb #101
+        0x17, 0x01,        // int #$01
+        0x21,              // ret
     };
     fwrite(&program, 1, ARRAY_SIZE(program)*sizeof(uint8_t), f);
     fclose(f);

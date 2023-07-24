@@ -16,6 +16,8 @@ const char *inst_as_cstr(Inst_Type type)
         case INST_TYPE_NOP: return "NOP";
         case INST_TYPE_ADD: return "ADD";
         case INST_TYPE_INT: return "INT";
+        case INST_TYPE_CALL: return "CALL";
+        case INST_TYPE_RET: return "RET";
         default: return NULL;
     }
     return NULL;

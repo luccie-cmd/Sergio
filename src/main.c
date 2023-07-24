@@ -108,12 +108,26 @@ void execute(CPU *cpu, File program){
                             }
                         }
                     } break;
+                    case INT_HLT: {
+                        exit(0);
+                    } break;
                     default: {
                         printf("No interrupt with value `%d`\n", interrupt);
                         exit(1);
                     }
                 }
                 programi+=2;
+            } break;
+            case INST_TYPE_CALL: {
+                BYTE msb = program.data[programi+1];
+                BYTE lsb = program.data[programi+2];
+                uint16_t combinedValue = ((uint16_t)msb << 8) | lsb;
+                cpu->stack[cpu->SP++] = programi+3;
+                programi=combinedValue;
+            } break;
+            case INST_TYPE_RET: {
+                programi = cpu->stack[cpu->SP - 1];
+                cpu->SP -= 1;
             } break;
             default: {
                 printf("No inst with hex value: 0x%x\n", program.data[programi]);
