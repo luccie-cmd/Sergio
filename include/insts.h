@@ -22,6 +22,8 @@ typedef enum{
     INST_TYPE_INT=0x17,  // cpu interrupts
     INST_TYPE_CALL=0x20, // sets the intstruction pointer to the address after it and pushes the return address to the stack
     INST_TYPE_RET=0x21,  // gets the first address in the stack that it finds and returns to it
+    INST_TYPE_CLC=0xc1,  // clears the carry flag
+    INST_TYPE_CLZ=0xf1,  // clears the zero flag
 } Inst_Type;
 
 typedef enum{

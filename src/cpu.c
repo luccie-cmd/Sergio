@@ -15,4 +15,7 @@ void print_cpu(const CPU *cpu){
             printf("mem[%d] = 0x%x\n", i, cpu->memory[i]);
         }
     }
+    printf("Flags:\n");
+    printf("    C = %s\n", cpu->flags.C ? "true" : "false");
+    printf("    Z = %s\n", cpu->flags.Z ? "true" : "false");
 }

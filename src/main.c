@@ -69,11 +69,11 @@ void execute(CPU *cpu, File program){
                 programi+=3;
             } break;
             case INST_TYPE_MOVB: {
-                cpu->registerA = cpu->registerB;
+                cpu->registerB = cpu->registerA;
                 programi++;
             } break;
             case INST_TYPE_MOVA: {
-                cpu->registerB = cpu->registerA;
+                cpu->registerA = cpu->registerB;
                 programi++;
             } break;
             case INST_TYPE_JMP: {
@@ -159,12 +159,21 @@ void execute(CPU *cpu, File program){
                 programi = cpu->stack[cpu->SP - 1];
                 cpu->SP -= 1;
             } break;
+            case INST_TYPE_CLC: {
+                cpu->flags.C = 0;
+                programi++;
+            } break;
+            case INST_TYPE_CLZ: {
+                cpu->flags.Z = 0;
+                programi++;
+            } break;
             default: {
-                printf("No inst with hex value: 0x%x\n", program.data[programi]);
+                printf("No inst with hex value: 0x%x at program %lld\n", program.data[programi], programi);
                 exit(1);
             }
         }
     }
+    printf("programi = %lld\n", programi);
 }
 
 void usage(){

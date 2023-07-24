@@ -21,6 +21,8 @@ const char *inst_as_cstr(Inst_Type type)
         case INST_TYPE_INT: return "INT";
         case INST_TYPE_CALL: return "CALL";
         case INST_TYPE_RET: return "RET";
+        case INST_TYPE_CLC: return "CLC";
+        case INST_TYPE_CLZ: return "CLZ";
         default: return NULL;
     }
     return NULL;

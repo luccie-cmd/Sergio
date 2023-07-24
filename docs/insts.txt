@@ -19,3 +19,5 @@ Thats why the div inst is not by add, sub, mul insts
 16: call
 17: ret
 18: div
+19: clc
+20: clz
