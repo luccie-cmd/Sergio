@@ -18,7 +18,6 @@ typedef struct{
     BYTE registerB;
     BYTE memory[INT16_MAX];
     Bus bus;
-    uint16_t addresses_len;
     WORD stack[255];
     BYTE SP;
     Flags flags;

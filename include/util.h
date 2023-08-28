@@ -9,7 +9,6 @@ typedef struct{
     BYTE *data;
 } File;
 
-int WriteFile(char *file);
 File ReadFile(char *file);
 void print_program(const File *f);
 

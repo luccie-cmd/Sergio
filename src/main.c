@@ -204,7 +204,6 @@ int main(int argc, char **argv){
             exit(1);
         }
     }
-    WriteFile(out_file);
     CPU cpu = {0};
     File program = ReadFile(out_file);
     execute(&cpu, program);
